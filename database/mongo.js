@@ -6,4 +6,4 @@ const mongoConnection = mongoose.connect("mongodb://localhost:27017/pds").then((
     }).catch((erro) => {
         console.log(erro)
     })
-//module.exports = mongoConnection
+module.exports = mongoConnection
