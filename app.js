@@ -14,6 +14,6 @@ app.use(express.json())
 //Routes
 app.use("/Functionary", functionaryRouter)
 
-app.listen(process.env.PORT, ()=>{
-    console.log(`Server rodando na porta ${process.env.PORT}`);
+app.listen(3000, ()=>{
+    console.log(`Server rodando na porta http://localhost:3000/`);
 })
