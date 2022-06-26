@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const functionary = mongoose.model("Functionary", {
+const employee = mongoose.model("Employee", {
     cpf: Number,
     nome: String,
     salario: Number,
@@ -8,4 +8,4 @@ const functionary = mongoose.model("Functionary", {
 })
 
 
-module.exports = functionary
+module.exports = employee
