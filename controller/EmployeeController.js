@@ -13,11 +13,11 @@ const create = async (req, res) => {
   try {
     await Employee.create(employee);
     res
-      .statuscode(201)
+      .status(201)
       .json({ Menssage: "Funcionario cadastrado com sucesso" });
   } catch (error) {
     res
-      .statuscode(400)
+      .status(400)
       .json({ Menssage: "Erro ao cadastrar um novo funcionario" });
   }
 };
@@ -25,9 +25,9 @@ const create = async (req, res) => {
 const list = async (req, res) => {
   try {
     const peoples = await Employee.find();
-    res.statuscode(200).json(peoples);
+    res.status(200).json(peoples);
   } catch (erro) {
-    res.statuscode(400).json({ Menssage: "Erro ao listar os funcionarios" });
+    res.status(400).json({ Menssage: "Erro ao listar os funcionarios" });
   }
 };
 
@@ -36,9 +36,9 @@ const listById = async (req, res) => {
 
   try {
     const person = await Employee.findOne({ _id: id });
-    res.statuscode(200).json(person);
+    res.status(200).json(person);
   } catch (erro) {
-    res.statuscode(400).json({ Menssage: "Erro ao encontrar o funcionario" });
+    res.status(400).json({ Menssage: "Erro ao encontrar o funcionario" });
   }
 };
 
@@ -56,13 +56,13 @@ const edit = async (req, res) => {
   try {
     const updateEmployee = await Employee.updateOne({ _id: id }, employee);
     res
-      .statuscode(200)
+      .status(200)
       .json({
         Menssage: "Dados do funcionario atualizados com sucesso",
         updateEmployee,
       });
   } catch (erro) {
-    res.statuscode(400).json({ Menssage: "Erro ao editar o funcionario" });
+    res.status(400).json({ Menssage: "Erro ao editar o funcionario" });
   }
 };
 
@@ -78,9 +78,9 @@ const deleteById = async (req, res) => {
 
   try {
     await Employee.deleteOne({ _id: id });
-    res.statuscode(200).json({ Menssage: "Funcionario deletado com sucesso" });
+    res.status(200).json({ Menssage: "Funcionario deletado com sucesso" });
   } catch (erro) {
-    res.statuscode(400).json({ Menssage: "Erro ao deletar o funcionario" });
+    res.status(400).json({ Menssage: "Erro ao deletar o funcionario" });
   }
 };
 module.exports = {
