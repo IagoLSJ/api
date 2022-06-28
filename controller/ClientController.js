@@ -1,4 +1,3 @@
-// const DB = require("../database/mongo")
 const Client = require("../models/Client");
 
 const create = async (req, res) => {
@@ -68,7 +67,7 @@ const deleteById = async (req, res) => {
     return res.status(400).json({ Menssage: "Cliente não encontrado" });
   }
   try {
-    await Functionary.deleteOne({ _id: id });
+    await Client.deleteOne({ _id: id });
     res.status(200).json({ Menssage: "Cliente deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o cliente" });

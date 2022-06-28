@@ -1,4 +1,3 @@
-const DB = require("../database/mongo");
 const Employee = require("../models/Employee");
 
 const create = async (req, res) => {
