@@ -1,5 +1,6 @@
 const Client = require("../models/Client");
-
+const ClientService = require("../service/ClientService");
+clientService = new ClientService();
 const create = async (req, res) => {
   let { nome, cpf, telefone , email} = req.body;
   cpf = parseInt(cpf)
@@ -10,8 +11,8 @@ const create = async (req, res) => {
     email,
   };
   try {
-    await Client.create(client);
-    res.status(201).json({ Menssage: "Cliente cadastrado com sucesso",client });
+    const response = await clientService.create(client); 
+    res.status(201).json({ Menssage: "Cliente cadastrado com sucesso", response});
   } catch (error) {
     res.status(400).json({ Menssage: "Erro ao cadastrar um novo cliente" });
   }
