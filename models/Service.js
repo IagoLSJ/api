@@ -1,10 +1,12 @@
 const mongoose = require("mongoose")
 
-const service = mongoose.model("Service",{
-  client : String,
-  employee : String,
-  hourly:String,
-  day:String,
+const service = mongoose.Schema({
+  price: {
+    type: Number
+  },
+  servicesOffered: {
+    type: [],
+  }
 })
 
-module.exports = service
+module.exports = mongoose.model("services", service)

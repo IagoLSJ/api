@@ -1,13 +1,21 @@
 const mongoose = require("mongoose")
 
-const client = mongoose.model("Client",{
-  nome : String,
-  cpf : Number,
-  telefone:String,
-  email:String,
+const client = mongoose.Schema({
+  nome: {
+    type: String
+  },
+  cpf: {
+    type: Number
+  },
+  telefone: {
+    type: Number
+  },
+  email: {
+    type: String
+  }
 })
 
-module.exports = client
+module.exports = mongoose.model("clients", client)
 
 // - os requisitos falam sobre haver uma lista de procedimentos com preços, e isso não está no BD (faltou uma entidade para armazenar os procedimentos, com descrição e preço).
 // - nome da entidade "Horario" muito ruim, deveria ser "Atendimento".
