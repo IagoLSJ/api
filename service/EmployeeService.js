@@ -12,13 +12,13 @@ class EmployeeService{
     return employee;
   }
 
-  async edit(employee, queryId){
+  async edit(queryId, employee){
     const updateEmployee = await Employee.updateOne(queryId, employee);
     return updateEmployee;
   }
 
-  async delete(employeeId){
-    await Employee.deleteOne({_id:employeeId});
+  async delete(queryId){
+    await Employee.deleteOne(queryId);
   } 
 }
 

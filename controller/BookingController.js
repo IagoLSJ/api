@@ -11,10 +11,9 @@ const list = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const booking = {cpfFuncionario, cpfCliente, nomeServico, horario, data} = req.body  
+    const booking = {funcionarioId, clienteId, servicoId, horario, data} = req.body  
     try {
-        const response = await bookingService.create(booking, require("../models/Client"), 
-          require("../models/Employee"), require("../models/Service"));
+        const response = await bookingService.create(booking);
         res.status(201).json({ Menssage: "Cadastrado realizado com sucesso",response });
       } catch (error) {
         console.log(error);
@@ -37,17 +36,10 @@ const edit = async (req, res) => {
       }
 }
 
-const deleteById = async (req, res) => {
-    const id = req.params.id;
-    
-    const booking = await bookingService.listById(id);
-    
-    if (!booking) {
-      return res.status(400).json({ Menssage: "Atendimento não encontrado" });
-    }
+const _delete = async (req, res) => {
 
     try {
-      await bookingService.delete(id);
+      await bookingService.delete(req.query);
       res.status(200).json({ Menssage: "Booking deletado com sucesso" });
     } catch (erro) {
       res.status(400).json({ Menssage: "Erro" });
@@ -62,10 +54,40 @@ const servicesDay = async(req,res) =>{
   const result = booking.bookingsOfDay(id,date);
   res.json({result})
 }
+
+const isAvailabilityHour = async (req, res) => {
+  try{
+    const aux = await bookingService.list(req.query)
+    console.log(aux)
+    if(aux){
+      res.send("Horário e data já resevados")
+      return
+    }
+    res.send("Horário e data disponíveis para reserva")
+  }catch(error){
+    res.send(error)
+  }
+} 
+
+const bookingsOfDay = async (req, res) => {
+  try{
+    const aux = await bookingService.bookingsOfDay(req.query)
+    if(!aux){
+      req.send("Funcionário ocupado")
+      return
+    }
+    res.send("Funcionário disponivel")
+  }catch(error){
+    res.send(error)
+  }
+}
+
 module.exports = {
     list,
     create,
     edit,
-    deleteById,
-    servicesDay
+    _delete,
+    servicesDay,
+    isAvailabilityHour,
+    bookingsOfDay
 }

@@ -1,28 +1,9 @@
-const { then } = require("../database/mongo");
+const db = require("../database/mongo")
 const Booking = require("../models/Booking");
 
 class BookingService{
-  async create(booking, ClientModel, EmployeeModel, ServiceModel){
-    
-
-      const idCliente = await ClientModel.find({cpf:booking.cpfCliente})
-      const idFuncionario = await EmployeeModel.find({cpf:booking.cpfFuncionario})
-      const nomeServico = await ServiceModel.find({name:booking.nomeServico})
-
-    
-
-      console.log(idCliente)
-      console.log(idFuncionario)
-      console.log(nomeServico)
-      
-      const newBooking = { funcionarioId: idFuncionario["_id"], clienteId: idCliente["_id"], 
-        servicoId: nomeServico["name"], horario:booking.horario, data:booking.data}
-
-      console.log(newBooking)
-
-      await Booking.create(newBooking)
-
-      return booking;
+  create(booking){  
+    return Booking.create(booking)
   }
 
   async list(requestQuery){
@@ -35,17 +16,17 @@ class BookingService{
     return updateBooking;
   }
 
-  async delete(bookingeId){
-    await Booking.deleteOne({_id:bookingeId});
+  async delete(queryId){
+    await Booking.deleteOne(queryId);
   }
 
-  async isavailabilityHour(employeeId, hour, date){
-    const result = await Booking.find({_id:employeeId, horario:hour, data:date})
+  async isAvailabilityHour(queryId){
+    const result = await Booking.find(queryId)
     return result;
   }
 
-  async bookingsOfDay(employeeId, date){
-    const result = await Booking.find({_id:employeeId, data:date})
+  async bookingsOfDay(queryId){
+    const result = await Booking.find(queryId)
     return result;
   }
 }

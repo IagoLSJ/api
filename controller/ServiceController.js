@@ -2,10 +2,10 @@ const ServiceService = require("../service/ServiceService");
 serviceService = new ServiceService();
 
 const create = async (req, res) => {
-  const { prince, servicesOffered} = req.body;
+  const { name, price, servicesOffered} = req.body;
 
   const service = {
-    prince, servicesOffered
+    name, price, servicesOffered
   };
   try {
     const response = await serviceService.create(service);
@@ -25,14 +25,15 @@ const list = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const { prince, servicesOffered } = req.body;
+  const { name, price, servicesOffered } = req.body;
   const service = {
-    prince,
+    name,
+    price,
     servicesOffered
   };
 
   try {
-    const updateService = await serviceService.edit(service, req.query);
+    const updateService = await serviceService.edit(req.query, service);
     res
       .status(200)
       .json({
@@ -44,14 +45,13 @@ const edit = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
-  const id = req.params.id;
-  const service = await serviceService.listById(id);
+const _delete = async (req, res) => {
+  const service = await serviceService.list(req.query);
   if (!service) {
     return res.status(400).json({ Menssage: "Atendimento não encontrado" });
   }
   try {
-    await serviceService.delete(id);
+    await serviceService.delete(req.query);
     res.status(200).json({ Menssage: "Atendimento deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar atendimento" });
@@ -62,5 +62,5 @@ module.exports  = {
   create,
   list,
   edit,
-  deleteById
+  _delete
 };

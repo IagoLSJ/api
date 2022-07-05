@@ -29,9 +29,9 @@ const list = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const { nome, cpf, telefone } = req.body;
-  const email = req.body;
-  email = undefined ? "" : email;
+  const { nome, cpf, telefone, email } = req.body;
+
+  //email = undefined ? "" : email;
   const client = {
     nome,
     cpf,
@@ -40,7 +40,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateClient = await clientService.edit(client, req.query);
+    const updateClient = await clientService.edit(req.query, client);
     res
       .status(200)
       .json({
@@ -52,14 +52,9 @@ const edit = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
-  const id = req.params.id;
-  const client = await clientService.list(id);
-  if (!client) {
-    return res.status(400).json({ Menssage: "Cliente não encontrado" });
-  }
+const _delete = async (req, res) => {
   try {
-    await clientService.delete(id);
+    await clientService.delete(req.query);
     res.status(200).json({ Menssage: "Cliente deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o cliente" });
@@ -72,5 +67,5 @@ module.exports  = {
   create,
   list,
   edit,
-  deleteById
+  _delete
 };

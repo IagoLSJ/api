@@ -43,7 +43,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateEmployee = await employeeService.edit(employee, req.query);
+    const updateEmployee = await employeeService.edit(req.query, employee);
     res
       .status(200)
       .json({
@@ -55,10 +55,9 @@ const edit = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
-  const id = req.params.id;
+const _delete = async (req, res) => {
 
-  const person = await employeeService.listById(id);
+  const person = await employeeService.list(req.query);
 
   if (!person) {
     res.send("Usuário não existe");
@@ -66,7 +65,7 @@ const deleteById = async (req, res) => {
   }
 
   try {
-    await employeeService.delete(id);
+    await employeeService.delete(req.query);
     res.status(200).json({ Menssage: "Funcionario deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o funcionario" });
@@ -78,5 +77,5 @@ module.exports = {
   create,
   list,
   edit,
-  deleteById
+  _delete
 };

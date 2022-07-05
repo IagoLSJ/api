@@ -12,13 +12,13 @@ class serviceService{
     return service;
   }
 
-  async edit(service, queryId){
+  async edit(queryId, service){
     const updateService = await Service.updateOne(queryId, service);
     return updateService;
   }
 
-  async delete(serviceId){
-    await Service.deleteOne({_id:serviceId});
+  async delete(queryId){
+    await Service.deleteOne(queryId);
   }
 }
 
