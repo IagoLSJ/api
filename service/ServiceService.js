@@ -7,13 +7,8 @@ class serviceService{
     return service;
   }
 
-  async list(){
-    const service = await Service.find();
-    return service;
-  }
-
-  async listById(serviceId){
-    const service = await Service.findOne({ _id: serviceId });
+  async list(requestQuery){
+    const service = await Service.find(requestQuery);
     return service;
   }
 

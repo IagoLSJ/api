@@ -7,13 +7,8 @@ class EmployeeService{
     return employee;
   }
 
-  async list(){
-    const employee = await Employee.find();
-    return employee;
-  }
-
-  async listById(EmployeeId){
-    const employee = await Employee.findOne({ _id: EmployeeId });
+  async list(requestQuery){
+    const employee = await Employee.find(requestQuery);
     return employee;
   }
 

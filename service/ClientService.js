@@ -7,13 +7,8 @@ class ClientService{
     return client;
   }
 
-  async list(){
-    const client = await Client.find();
-    return client;
-  }
-
-  async listById(clientId){
-    const client = await Client.findOne({ _id: clientId });
+  async list(requestQuery){
+    const client = await Client.find(requestQuery);
     return client;
   }
 

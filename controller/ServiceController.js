@@ -14,22 +14,13 @@ const create = async (req, res) => {
     res.status(400).json({ Menssage: "Erro ao cadastrar um novo atendimento" });
   }
 };
+
 const list = async (req, res) => {
   try {
-    const services = await serviceService.list();
+    const services = await serviceService.list(req.query);
     res.status(200).json(services);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os atendimento" });
-  }
-};
-
-const listByIdEmployee = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const service = await serviceService(id);
-    res.status(200).json(service);
-  } catch (erro) {
-    res.status(400).json({ Menssage: "Erro ao encontrar o atendimento" });
   }
 };
 
@@ -71,7 +62,6 @@ const deleteById = async (req, res) => {
 module.exports  = {
   create,
   list,
-  listByIdEmployee,
   edit,
   deleteById
 };

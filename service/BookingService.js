@@ -6,13 +6,8 @@ class BookingService{
       return booking;
   }
 
-  async list(){
-    const booking = await Booking.find();
-    return booking;
-  }
-
-  async listById(bookingId){
-    const booking = await Booking.findOne({ _id: bookingId });
+  async list(requestQuery){
+    const booking = await Booking.find(requestQuery);
     return booking;
   }
 
