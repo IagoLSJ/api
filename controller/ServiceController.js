@@ -1,20 +1,22 @@
-const Service = require("../models/Service");
+const ServiceService = require("../service/ServiceService");
+serviceService = new ServiceService();
 
 const create = async (req, res) => {
-  let { client, employee, hourly , day} = req.body;
+  const { prince, servicesOffered} = req.body;
+
   const service = {
-    client, employee, hourly , day
+    prince, servicesOffered
   };
   try {
-    await Service.create(service);
-    res.status(201).json({ Menssage: "Aatendimento  cadastrado com sucesso",service });
+    const response = await serviceService.create(service);
+    res.status(201).json({ Menssage: "Atendimento  cadastrado com sucesso",response });
   } catch (error) {
     res.status(400).json({ Menssage: "Erro ao cadastrar um novo atendimento" });
   }
 };
 const list = async (req, res) => {
   try {
-    const services = await Service.find();
+    const services = await serviceService.list();
     res.status(200).json(services);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os atendimento" });
@@ -24,7 +26,7 @@ const list = async (req, res) => {
 const listByIdEmployee = async (req, res) => {
   const id = req.params.id;
   try {
-    const service = await Service.findOne({ employee: id });
+    const service = await serviceService(id);
     res.status(200).json(service);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao encontrar o atendimento" });
@@ -33,18 +35,14 @@ const listByIdEmployee = async (req, res) => {
 
 const edit = async (req, res) => {
   const id = req.params.id;
-  const { nome, cpf, telefone } = req.body;
-  const email = req.body;
-  email = undefined ? "" : email;
+  const { prince, servicesOffered } = req.body;
   const service = {
-    nome,
-    cpf,
-    telefone,
-    email,
+    prince,
+    servicesOffered
   };
 
   try {
-    const updateService = await Service.updateOne({ _id: id }, service);
+    const updateService = await serviceService.edit(service, id);
     res
       .status(200)
       .json({
@@ -58,12 +56,12 @@ const edit = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const id = req.params.id;
-  const service = await Service.findOne({ _id: id });
+  const service = await serviceService.listById(id);
   if (!service) {
     return res.status(400).json({ Menssage: "Atendimento não encontrado" });
   }
   try {
-    await Service.deleteOne({ _id: id });
+    await serviceService.delete(id);
     res.status(200).json({ Menssage: "Atendimento deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar atendimento" });
@@ -75,5 +73,5 @@ module.exports  = {
   list,
   listByIdEmployee,
   edit,
-  deleteById,
+  deleteById
 };

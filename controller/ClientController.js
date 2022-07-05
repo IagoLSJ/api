@@ -1,6 +1,6 @@
-const Client = require("../models/Client");
 const ClientService = require("../service/ClientService");
 clientService = new ClientService();
+
 const create = async (req, res) => {
   let { nome, cpf, telefone , email} = req.body;
   cpf = parseInt(cpf)
@@ -19,7 +19,7 @@ const create = async (req, res) => {
 };
 const list = async (req, res) => {
   try {
-    const clients = await Client.find();
+    const clients = await clientService.list();
     res.status(200).json(clients);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os clientes" });
@@ -29,7 +29,7 @@ const list = async (req, res) => {
 const listById = async (req, res) => {
   const id = req.params.id;
   try {
-    const client = await Client.findOne({ _id: id });
+    const client = await clientService.listById(id);
     res.status(200).json(client);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao encontrar o cliente" });
@@ -49,7 +49,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateClient = await Client.updateOne({ _id: id }, client);
+    const updateClient = await clientService.edit(client, id);
     res
       .status(200)
       .json({
@@ -63,22 +63,24 @@ const edit = async (req, res) => {
 
 const deleteById = async (req, res) => {
   const id = req.params.id;
-  const client = await Client.findOne({ _id: id });
+  const client = await clientService.list(id);
   if (!client) {
     return res.status(400).json({ Menssage: "Cliente não encontrado" });
   }
   try {
-    await Client.deleteOne({ _id: id });
+    await clientService.delete(id);
     res.status(200).json({ Menssage: "Cliente deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o cliente" });
   }
 };
 
+
+
 module.exports  = {
   create,
   list,
   listById,
   edit,
-  deleteById,
+  deleteById
 };

@@ -1,4 +1,5 @@
-const Employee = require("../models/Employee");
+const EmployeeService = require("../service/EmployeeService");
+employeeService = new EmployeeService();
 
 const create = async (req, res) => {
   const { cpf, nome, salario, profissoes } = req.body;
@@ -10,10 +11,10 @@ const create = async (req, res) => {
   };
 
   try {
-    await Employee.create(employee);
+    const response = await employeeService.create(employee);
     res
       .status(201)
-      .json({ Menssage: "Funcionario cadastrado com sucesso" });
+      .json({ Menssage: "Funcionario cadastrado com sucesso",response});
   } catch (error) {
     res
       .status(400)
@@ -23,7 +24,7 @@ const create = async (req, res) => {
 
 const list = async (req, res) => {
   try {
-    const peoples = await Employee.find();
+    const peoples = await employeeService.list();
     res.status(200).json(peoples);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os funcionarios" });
@@ -34,7 +35,7 @@ const listById = async (req, res) => {
   const id = req.params.id;
 
   try {
-    const person = await Employee.findOne({ _id: id });
+    const person = await employeeService.listById(id);
     res.status(200).json(person);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao encontrar o funcionario" });
@@ -53,7 +54,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateEmployee = await Employee.updateOne({ _id: id }, employee);
+    const updateEmployee = await employeeService.edit(employee,id);
     res
       .status(200)
       .json({
@@ -68,7 +69,7 @@ const edit = async (req, res) => {
 const deleteById = async (req, res) => {
   const id = req.params.id;
 
-  const person = await Employee.findOne({ _id: id });
+  const person = await employeeService.listById(id);
 
   if (!person) {
     res.send("Usuário não existe");
@@ -76,7 +77,7 @@ const deleteById = async (req, res) => {
   }
 
   try {
-    await Employee.deleteOne({ _id: id });
+    await employeeService.delete(id);
     res.status(200).json({ Menssage: "Funcionario deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o funcionario" });
@@ -87,5 +88,5 @@ module.exports = {
   list,
   listById,
   edit,
-  deleteById,
+  deleteById
 };
