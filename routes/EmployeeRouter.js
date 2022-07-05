@@ -6,5 +6,4 @@ router.get("/",EmployeeController.list)
 router.get("/:id", EmployeeController.listById)
 router.put("/:id", EmployeeController.edit)
 router.delete("/:id", EmployeeController.deleteById)
-router.get("/:id/:date", EmployeeController.servicesDay) // mover essa rota para o BookingController
 module.exports = router
