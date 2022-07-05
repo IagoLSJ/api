@@ -1,10 +1,9 @@
 const Booking = require("../models/Booking");
 
 class BookingService{
-  
   async create(booking){
-    await Booking.create(booking);
-    return booking;
+      await Booking.create(booking);
+      return booking;
   }
 
   async list(){
@@ -25,6 +24,15 @@ class BookingService{
   async delete(bookingeId){
     await Booking.deleteOne({_id:bookingeId});
   }
-}
 
+  async isavailabilityHour(employeeId, hour, date){
+    const result = await Booking.find({_id:employeeId, horario:hour, data:date})
+    return result;
+  }
+
+  async bookingsOfDay(employeeId, date){
+    const result = await Booking.find({_id:employeeId, data:date})
+    return result;
+  }
+}
 module.exports = BookingService;

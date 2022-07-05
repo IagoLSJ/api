@@ -1,4 +1,5 @@
 const EmployeeService = require("../service/EmployeeService");
+const BookingsService = require("../service/BookingService")
 employeeService = new EmployeeService();
 
 const create = async (req, res) => {
@@ -83,6 +84,8 @@ const deleteById = async (req, res) => {
     res.status(400).json({ Menssage: "Erro ao deletar o funcionario" });
   }
 };
+
+
 module.exports = {
   create,
   list,

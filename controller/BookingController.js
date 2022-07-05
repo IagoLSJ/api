@@ -3,7 +3,7 @@ bookingService = new BookingService();
 
 const list = async (req, res) => {
     try {
-        const booking = await BookingService.list();
+        const booking = await bookingService.list();
         res.status(200).json(booking);
       } catch (erro) {
         res.status(400).json({ Menssage: "Erro ao listar os bookings" });
@@ -20,12 +20,15 @@ const listById = async (req, res) => {
     }
 }
 
-const create = async  (req, res) => {
-    const booking = {nome, preco, funcionarioId, clienteId, servicoId} = req.body
+const create = async (req, res) => {
+    const {nome, preco, funcionario, cliente, servico, horario, data} = req.body
+    
+    const booking = {nome, preco, funcionario, cliente, servico, horario, data}
     try {
-        const response = await BookingService.create(booking);
+        const response = await bookingService.create(booking);
         res.status(201).json({ Menssage: "Cadastrado realizado com sucesso",response });
       } catch (error) {
+        console.log(error);
         res.status(400).json({ Menssage: "Erro" });
       }
 }
@@ -63,10 +66,19 @@ const deleteById = async (req, res) => {
     }
 }
 
+const servicesDay = async(req,res) =>{
+  let {id,hour, date} = req.params;
+  booking = new BookingsService();
+  date = date.replace('_', '/')
+  console.log(date);
+  const result = booking.bookingsOfDay(id,date);
+  res.json({result})
+}
 module.exports = {
     list,
     listById,
     create,
     edit,
-    deleteById
+    deleteById,
+    servicesDay
 }
