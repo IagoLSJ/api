@@ -46,15 +46,6 @@ const _delete = async (req, res) => {
     }
 }
 
-const servicesDay = async(req,res) =>{
-  let {id, hour, date} = req.params;
-  booking = new BookingsService();
-  date = date.replace('_', '/')
-  console.log(date);
-  const result = booking.bookingsOfDay(id,date);
-  res.json({result})
-}
-
 const isAvailabilityHour = async (req, res) => {
   console.log(req.query)
   try{
@@ -78,7 +69,7 @@ const bookingsOfDay = async (req, res) => {
       res.send(aux)
       return
     }
-    res.send("Não há reservas nesta data")
+    res.send("Não há reservas feitas nesta data")
   }catch(error){
     res.send(error)
   }
@@ -89,7 +80,6 @@ module.exports = {
     create,
     edit,
     _delete,
-    servicesDay,
     isAvailabilityHour,
     bookingsOfDay
 }
