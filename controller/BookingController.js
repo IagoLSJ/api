@@ -56,10 +56,11 @@ const servicesDay = async(req,res) =>{
 }
 
 const isAvailabilityHour = async (req, res) => {
+  console.log(req.query)
   try{
     const aux = await bookingService.list(req.query)
-    console.log(aux)
-    if(!aux){
+    console.log(aux.length)
+    if(aux.length==0){
       res.send("Horário e data disponíveis para reserva")
       return
     }
@@ -73,11 +74,11 @@ const bookingsOfDay = async (req, res) => {
   try{
     const aux = await bookingService.bookingsOfDay(req.query)
     console.log(aux.length)
-    if(aux!=0){
-      res.send("Funcionário ocupado")
+    if(aux.length!=0){
+      res.send(aux)
       return
     }
-    res.send("Funcionário disponivel")
+    res.send("Não há reservas nesta data")
   }catch(error){
     res.send(error)
   }
