@@ -2,7 +2,7 @@ const ClientService = require("../service/ClientService");
 clientService = new ClientService();
 
 const create = async (req, res) => {
-  let { nome, cpf, telefone , email} = req.body;
+  let { nome, cpf, telefone, email} = req.body;
   cpf = parseInt(cpf)
   const client = {
     nome,
@@ -10,6 +10,7 @@ const create = async (req, res) => {
     telefone,
     email,
   };
+  console.log(client)
   try {
     const response = await clientService.create(client); 
     res.status(201).json({ Menssage: "Cliente cadastrado com sucesso", response});

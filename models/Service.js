@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const service = mongoose.Schema({
   name: {
-    type: Number
+    type: String
   },
   price: {
     type: Number

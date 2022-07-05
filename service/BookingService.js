@@ -1,8 +1,27 @@
+const { then } = require("../database/mongo");
 const Booking = require("../models/Booking");
 
 class BookingService{
-  async create(booking){
-      await Booking.create(booking);
+  async create(booking, ClientModel, EmployeeModel, ServiceModel){
+    
+
+      const idCliente = await ClientModel.find({cpf:booking.cpfCliente})
+      const idFuncionario = await EmployeeModel.find({cpf:booking.cpfFuncionario})
+      const nomeServico = await ServiceModel.find({name:booking.nomeServico})
+
+    
+
+      console.log(idCliente)
+      console.log(idFuncionario)
+      console.log(nomeServico)
+      
+      const newBooking = { funcionarioId: idFuncionario["_id"], clienteId: idCliente["_id"], 
+        servicoId: nomeServico["name"], horario:booking.horario, data:booking.data}
+
+      console.log(newBooking)
+
+      await Booking.create(newBooking)
+
       return booking;
   }
 

@@ -11,11 +11,10 @@ const list = async (req, res) => {
 }
 
 const create = async (req, res) => {
-    const {nome, preco, funcionario, cliente, servico, horario, data} = req.body
-    
-    const booking = {nome, preco, funcionario, cliente, servico, horario, data}
+    const booking = {cpfFuncionario, cpfCliente, nomeServico, horario, data} = req.body  
     try {
-        const response = await bookingService.create(booking);
+        const response = await bookingService.create(booking, require("../models/Client"), 
+          require("../models/Employee"), require("../models/Service"));
         res.status(201).json({ Menssage: "Cadastrado realizado com sucesso",response });
       } catch (error) {
         console.log(error);
