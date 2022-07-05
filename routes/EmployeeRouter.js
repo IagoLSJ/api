@@ -6,4 +6,8 @@ router.get("/",EmployeeController.list)
 router.get("/:id", EmployeeController.listById)
 router.put("/:id", EmployeeController.edit)
 router.delete("/:id", EmployeeController.deleteById)
+<<<<<<< Updated upstream
+=======
+ // mover essa rota para o BookingController
+>>>>>>> Stashed changes
 module.exports = router
