@@ -25,7 +25,6 @@ const list = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const id = req.params.id;
   const { prince, servicesOffered } = req.body;
   const service = {
     prince,
@@ -33,7 +32,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateService = await serviceService.edit(service, id);
+    const updateService = await serviceService.edit(service, req.query);
     res
       .status(200)
       .json({

@@ -10,7 +10,6 @@ const list = async (req, res) => {
       }
 }
 
-
 const create = async (req, res) => {
     const {nome, preco, funcionario, cliente, servico, horario, data} = req.body
     
@@ -26,9 +25,8 @@ const create = async (req, res) => {
 
 const edit = async (req, res) => {
     const booking = {nome, preco, funcionarioId, clienteId, servicoId} = req.body
-    const id = req.params.id
     try {
-        const updateBooking = await bookingService.edit(booking, id);
+        const updateBooking = await bookingService.edit(req.query, booking);
         res
           .status(200)
           .json({

@@ -12,8 +12,8 @@ class EmployeeService{
     return employee;
   }
 
-  async edit(employee, employeeId){
-    const updateEmployee = await Employee.updateOne({ _id: employeeId }, employee);
+  async edit(employee, queryId){
+    const updateEmployee = await Employee.updateOne(queryId, employee);
     return updateEmployee;
   }
 

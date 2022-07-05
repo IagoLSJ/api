@@ -12,8 +12,8 @@ class serviceService{
     return service;
   }
 
-  async edit(service, serviceId){
-    const updateService = await Service.updateOne({ _id: serviceId }, service);
+  async edit(service, queryId){
+    const updateService = await Service.updateOne(queryId, service);
     return updateService;
   }
 

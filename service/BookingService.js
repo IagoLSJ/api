@@ -11,8 +11,8 @@ class BookingService{
     return booking;
   }
 
-  async edit(booking, bookingId){
-    const updateBooking = await Booking.updateOne({ _id: bookingId }, booking);
+  async edit(queryId, booking){
+    const updateBooking = await Booking.updateOne(queryId, booking);
     return updateBooking;
   }
 

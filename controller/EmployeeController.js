@@ -33,7 +33,6 @@ const list = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const id = req.params.id;
   const { cpf, nome, salario, profissoes } = req.body;
 
   const employee = {
@@ -44,7 +43,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateEmployee = await employeeService.edit(employee,id);
+    const updateEmployee = await employeeService.edit(employee, req.query);
     res
       .status(200)
       .json({

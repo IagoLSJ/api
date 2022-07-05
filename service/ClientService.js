@@ -12,8 +12,8 @@ class ClientService{
     return client;
   }
 
-  async edit(client, clientId){
-    const updateClient = await Client.updateOne({ _id: clientId }, client);
+  async edit(client, queryId){
+    const updateClient = await Client.updateOne(queryId, client);
     return updateClient;
   }
 

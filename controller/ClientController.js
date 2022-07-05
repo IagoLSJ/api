@@ -28,7 +28,6 @@ const list = async (req, res) => {
 };
 
 const edit = async (req, res) => {
-  const id = req.params.id;
   const { nome, cpf, telefone } = req.body;
   const email = req.body;
   email = undefined ? "" : email;
@@ -40,7 +39,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateClient = await clientService.edit(client, id);
+    const updateClient = await clientService.edit(client, req.query);
     res
       .status(200)
       .json({

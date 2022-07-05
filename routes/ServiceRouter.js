@@ -3,7 +3,7 @@ const ServiceRouter = require("../controller/ServiceController")
 
 router.post("/", ServiceRouter.create)
 router.get("/",ServiceRouter.list)
-router.put("/:id", ServiceRouter.edit)
+router.put("/", ServiceRouter.edit)
 router.delete("/:id", ServiceRouter.deleteById)
 
 module.exports = router

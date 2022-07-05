@@ -3,7 +3,7 @@ const bookingController = require("../controller/BookingController")
 
 route.get("/", bookingController.list)
 route.post("/", bookingController.create)
-route.put("/:id", bookingController.edit)
-route.delete("/:id", bookingController.deleteById)
+route.put("/", bookingController.edit)
+route.delete("/", bookingController.deleteById)
 
 module.exports = route
