@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 
+const db = require("./database/mongo")
 const EmployeeRouter = require("./routes/EmployeeRouter")
 const ClientRouter = require("./routes/ClientRouter")
 const ServiceRouter = require("./routes/ServiceRouter")
