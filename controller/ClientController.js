@@ -2,7 +2,7 @@ const ClientService = require("../service/ClientService");
 clientService = new ClientService();
 
 const create = async (req, res) => {
-  let { nome, cpf, telefone , email} = req.body;
+  let { nome, cpf, telefone, email} = req.body;
   cpf = parseInt(cpf)
   const client = {
     nome,
@@ -10,6 +10,7 @@ const create = async (req, res) => {
     telefone,
     email,
   };
+  console.log(client)
   try {
     const response = await clientService.create(client); 
     res.status(201).json({ Menssage: "Cliente cadastrado com sucesso", response});
@@ -17,30 +18,20 @@ const create = async (req, res) => {
     res.status(400).json({ Menssage: "Erro ao cadastrar um novo cliente" });
   }
 };
+
 const list = async (req, res) => {
   try {
-    const clients = await clientService.list();
+    const clients = await clientService.list(req.query);
     res.status(200).json(clients);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os clientes" });
   }
 };
 
-const listById = async (req, res) => {
-  const id = req.params.id;
-  try {
-    const client = await clientService.listById(id);
-    res.status(200).json(client);
-  } catch (erro) {
-    res.status(400).json({ Menssage: "Erro ao encontrar o cliente" });
-  }
-};
-
 const edit = async (req, res) => {
-  const id = req.params.id;
-  const { nome, cpf, telefone } = req.body;
-  const email = req.body;
-  email = undefined ? "" : email;
+  const { nome, cpf, telefone, email } = req.body;
+
+  //email = undefined ? "" : email;
   const client = {
     nome,
     cpf,
@@ -49,7 +40,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateClient = await clientService.edit(client, id);
+    const updateClient = await clientService.edit(req.query, client);
     res
       .status(200)
       .json({
@@ -61,14 +52,9 @@ const edit = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
-  const id = req.params.id;
-  const client = await clientService.list(id);
-  if (!client) {
-    return res.status(400).json({ Menssage: "Cliente não encontrado" });
-  }
+const _delete = async (req, res) => {
   try {
-    await clientService.delete(id);
+    await clientService.delete(req.query);
     res.status(200).json({ Menssage: "Cliente deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o cliente" });
@@ -80,7 +66,6 @@ const deleteById = async (req, res) => {
 module.exports  = {
   create,
   list,
-  listById,
   edit,
-  deleteById
+  _delete
 };

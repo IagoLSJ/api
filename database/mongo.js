@@ -1,17 +1,11 @@
 const mongoose = require("mongoose")
-require("dotenv/config")
+//require("dotenv/config")
 
 
-const url = process.env.DBConnection
+//const url = process.env.DBConnection
 
 
-/* const connectionParams={
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true 
-} */
-
-const mongoConnection = mongoose.connect(url).then(() =>{
+const mongoConnection = mongoose.connect("mongodb://localhost:27017/api_pds").then(() =>{
         console.log("Banco conectado")
     }).catch((erro) => {
         console.log(erro)

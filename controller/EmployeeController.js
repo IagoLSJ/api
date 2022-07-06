@@ -25,26 +25,14 @@ const create = async (req, res) => {
 
 const list = async (req, res) => {
   try {
-    const peoples = await employeeService.list();
+    const peoples = await employeeService.list(req.query);
     res.status(200).json(peoples);
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao listar os funcionarios" });
   }
 };
 
-const listById = async (req, res) => {
-  const id = req.params.id;
-
-  try {
-    const person = await employeeService.listById(id);
-    res.status(200).json(person);
-  } catch (erro) {
-    res.status(400).json({ Menssage: "Erro ao encontrar o funcionario" });
-  }
-};
-
 const edit = async (req, res) => {
-  const id = req.params.id;
   const { cpf, nome, salario, profissoes } = req.body;
 
   const employee = {
@@ -55,7 +43,7 @@ const edit = async (req, res) => {
   };
 
   try {
-    const updateEmployee = await employeeService.edit(employee,id);
+    const updateEmployee = await employeeService.edit(req.query, employee);
     res
       .status(200)
       .json({
@@ -67,10 +55,9 @@ const edit = async (req, res) => {
   }
 };
 
-const deleteById = async (req, res) => {
-  const id = req.params.id;
+const _delete = async (req, res) => {
 
-  const person = await employeeService.listById(id);
+  const person = await employeeService.list(req.query);
 
   if (!person) {
     res.send("Usuário não existe");
@@ -78,7 +65,7 @@ const deleteById = async (req, res) => {
   }
 
   try {
-    await employeeService.delete(id);
+    await employeeService.delete(req.query);
     res.status(200).json({ Menssage: "Funcionario deletado com sucesso" });
   } catch (erro) {
     res.status(400).json({ Menssage: "Erro ao deletar o funcionario" });
@@ -89,7 +76,6 @@ const deleteById = async (req, res) => {
 module.exports = {
   create,
   list,
-  listById,
   edit,
-  deleteById
+  _delete
 };

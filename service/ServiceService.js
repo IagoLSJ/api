@@ -7,23 +7,18 @@ class serviceService{
     return service;
   }
 
-  async list(){
-    const service = await Service.find();
+  async list(requestQuery){
+    const service = await Service.find(requestQuery);
     return service;
   }
 
-  async listById(serviceId){
-    const service = await Service.findOne({ _id: serviceId });
-    return service;
-  }
-
-  async edit(service, serviceId){
-    const updateService = await Service.updateOne({ _id: serviceId }, service);
+  async edit(queryId, service){
+    const updateService = await Service.updateOne(queryId, service);
     return updateService;
   }
 
-  async delete(serviceId){
-    await Service.deleteOne({_id:serviceId});
+  async delete(queryId){
+    await Service.deleteOne(queryId);
   }
 }
 

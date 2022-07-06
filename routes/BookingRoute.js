@@ -2,9 +2,10 @@ const route = require("express").Router()
 const bookingController = require("../controller/BookingController")
 
 route.get("/", bookingController.list)
-route.get("/:id", bookingController.listById)
 route.post("/", bookingController.create)
-route.put("/:id", bookingController.edit)
-route.delete("/:id", bookingController.deleteById) 
+route.put("/", bookingController.edit)
+route.delete("/", bookingController._delete)
+route.get("/isAvailabilityHour", bookingController.isAvailabilityHour)
+route.get("/bookingsOfDay", bookingController.bookingsOfDay)
 
 module.exports = route

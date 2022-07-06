@@ -13,6 +13,9 @@ app.use(
     )
 ) 
 
+const x = new Date()
+
+
 app.use(express.json())
 
 //Routes

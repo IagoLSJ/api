@@ -7,23 +7,18 @@ class ClientService{
     return client;
   }
 
-  async list(){
-    const client = await Client.find();
+  async list(queryId){
+    const client = await Client.find(queryId);
     return client;
   }
 
-  async listById(clientId){
-    const client = await Client.findOne({ _id: clientId });
-    return client;
-  }
-
-  async edit(client, clientId){
-    const updateClient = await Client.updateOne({ _id: clientId }, client);
+  async edit(queryId, client){
+    const updateClient = await Client.updateOne(queryId, client);
     return updateClient;
   }
 
-  async delete(clienteId){
-    await Client.deleteOne({_id:clienteId});
+  async delete(queryId){
+    await Client.deleteOne(queryId);
   }
 }
 

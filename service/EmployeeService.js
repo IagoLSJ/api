@@ -7,23 +7,18 @@ class EmployeeService{
     return employee;
   }
 
-  async list(){
-    const employee = await Employee.find();
+  async list(requestQuery){
+    const employee = await Employee.find(requestQuery);
     return employee;
   }
 
-  async listById(EmployeeId){
-    const employee = await Employee.findOne({ _id: EmployeeId });
-    return employee;
-  }
-
-  async edit(employee, employeeId){
-    const updateEmployee = await Employee.updateOne({ _id: employeeId }, employee);
+  async edit(queryId, employee){
+    const updateEmployee = await Employee.updateOne(queryId, employee);
     return updateEmployee;
   }
 
-  async delete(employeeId){
-    await Employee.deleteOne({_id:employeeId});
+  async delete(queryId){
+    await Employee.deleteOne(queryId);
   } 
 }
 

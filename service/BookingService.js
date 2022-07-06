@@ -1,37 +1,32 @@
+const db = require("../database/mongo")
 const Booking = require("../models/Booking");
 
 class BookingService{
-  async create(booking){
-      await Booking.create(booking);
-      return booking;
+  create(booking){  
+    return Booking.create(booking)
   }
 
-  async list(){
-    const booking = await Booking.find();
+  async list(requestQuery){
+    const booking = await Booking.find(requestQuery);
     return booking;
   }
 
-  async listById(bookingId){
-    const booking = await Booking.findOne({ _id: bookingId });
-    return booking;
-  }
-
-  async edit(booking, bookingId){
-    const updateBooking = await Booking.updateOne({ _id: bookingId }, booking);
+  async edit(queryId, booking){
+    const updateBooking = await Booking.updateOne(queryId, booking);
     return updateBooking;
   }
 
-  async delete(bookingeId){
-    await Booking.deleteOne({_id:bookingeId});
+  async delete(queryId){
+    await Booking.deleteOne(queryId);
   }
 
-  async isavailabilityHour(employeeId, hour, date){
-    const result = await Booking.find({_id:employeeId, horario:hour, data:date})
+  async isAvailabilityHour(queryId){
+    const result = await Booking.find(queryId)
     return result;
   }
 
-  async bookingsOfDay(employeeId, date){
-    const result = await Booking.find({_id:employeeId, data:date})
+  async bookingsOfDay(queryId){
+    const result = await Booking.find(queryId)
     return result;
   }
 }
